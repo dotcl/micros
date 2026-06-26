@@ -1,5 +1,7 @@
 (defsystem "micros"
-  :depends-on ()
+  :depends-on ((:feature :dotcl "dotcl-socket")
+               (:feature :dotcl "dotcl-thread")
+               (:feature :dotcl "dotcl-gray"))
   :version "0.0.0"
   :serial t
   :perform (load-op :after (o c)
@@ -10,18 +12,13 @@
                 :components ((:file "backend")
                              (:file "source-path-parser")
                              (:file "source-file-cache")
-                             #+sbcl
-                             (:file "sbcl")
-                             #+abcl
-                             (:file "abcl")
-                             #+clasp
-                             (:file "clasp")
-                             #+ccl
-                             (:file "ccl")
-                             #+ecl
-                             (:file "ecl")
-                             #+lispworks
-                             (:file "lispworks")
+                             (:file "sbcl" :if-feature :sbcl)
+                             (:file "abcl" :if-feature :abcl)
+                             (:file "clasp" :if-feature :clasp)
+                             (:file "ccl" :if-feature :ccl)
+                             (:file "ecl" :if-feature :ecl)
+                             (:file "lispworks" :if-feature :lispworks)
+                             (:file "dotcl" :if-feature :dotcl)
                              (:file "gray")
                              (:file "match")
                              (:file "rpc")))
